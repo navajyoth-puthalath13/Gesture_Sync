@@ -1,5 +1,5 @@
-# Gesture sync/v_mouse
+# Gesture sync
 
-this part cover on the virtual_mouse
+
 
 
