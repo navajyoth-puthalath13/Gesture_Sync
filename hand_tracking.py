@@ -1,10 +1,11 @@
 import time
 import cv2
 import mediapipe as mp
+import  handmod as mm
 
 cap = cv2.VideoCapture(0)       #captureing video form webcam
 
-
+decorator=mm.handDetector
 mpHands = mp.solutions.hands
 hands = mpHands.Hands()       # Initialize MediaPipe Hands
 mpDraw = mp.solutions.drawing_utils
@@ -30,6 +31,7 @@ while True:
                     cv2.circle(img, (cx, cy), 10, (255, 0, 0), 2, cv2.FILLED)
             mpDraw.draw_landmarks(img, handLms, mpHands.HAND_CONNECTIONS)             #prints the coordinates of the specific landmark (id=4) to the console.
 
+    cvr = decorator.fingerUp(imgRGB)
     cTime = time.time()
     fps = 1 / (cTime - pTime)        #Calculates the frame per second (FPS) by measuring the time taken to process the current frame.
     pTime = cTime
