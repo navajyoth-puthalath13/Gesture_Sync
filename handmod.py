@@ -13,6 +13,7 @@ class handDetector():
         self.mpHands = mp.solutions.hands
         self.hands = self.mpHands.Hands(self.mode, int(self.maxHands), int(self.detection_confidence),int(self.tracking_confidence))
         self.mpDraw = mp.solutions.drawing_utils
+        self.tipId = [4, 8, 12, 16, 20]
 
     def findHands(self, img, draw=True):            # Function to detect hands in the image
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -52,6 +53,20 @@ class handDetector():
 
         return self.lmList, bbox
 
+    def fingerUp(self):
+        fingers = []
+        if len(self.lmList) != 0:
+            if self.lmList[self.tipId[0]][1] > self.lmList[self.tipId[0] - 1][1]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+            for id in range(1, 5):
+                if self.lmList[self.tipId[id]][1] > self.lmList[self.tipId[id] - 2][1]:
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+        return fingers
+
 
 def main():
     # cTime = 0
@@ -78,7 +93,7 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('q'):  # Press 'q' to quit
             break
 
-    cap.release()       # Release the camera
+    cap.release()                # Release the camera
     cv2.destroyAllWindows()      # Close all OpenCV windows
 
 
