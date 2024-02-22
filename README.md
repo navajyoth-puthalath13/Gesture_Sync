@@ -1,1 +1,2 @@
-# Gesture_Sync
+# hand tracking module
+# 
